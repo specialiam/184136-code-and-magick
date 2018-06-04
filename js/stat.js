@@ -38,12 +38,12 @@ window.renderStatistics = function (ctx, names, times) {
   };
 
   var drawResult = function (name, time, position, step) { // получаем результат одного чела
-    var SPACE_TEXT_TABLE = 5;
-    var RESULTSE = 20;
+    var SPACE_BETWEEN_TEXT_TABLE = 5;
+    var RESULTS_BETWEEN_TABLE = 20;
     ctx.fillStyle = getColor(name);
     ctx.fillRect(INITIAL_X + (INDENT + BAR_WIDTH) * position, INITIAL_Y, BAR_WIDTH, -time * step);
-    ctx.fillText(name, INITIAL_X + (INDENT + BAR_WIDTH) * position, INITIAL_Y + SPACE_TEXT_TABLE);
-    ctx.fillText(time.toFixed(0), INITIAL_X + (INDENT + BAR_WIDTH) * position, INITIAL_Y - time * step - RESULTSE);
+    ctx.fillText(name, INITIAL_X + (INDENT + BAR_WIDTH) * position, INITIAL_Y + SPACE_BETWEEN_TEXT_TABLE);
+    ctx.fillText(time.toFixed(0), INITIAL_X + (INDENT + BAR_WIDTH) * position, INITIAL_Y - time * step - RESULTS_BETWEEN_TABLE);
   };
 
   var maxTime = getMaxElement(times);
