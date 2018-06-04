@@ -37,7 +37,7 @@ var TEXT_FONT = '16px PT Mono';
 var TEXT_BASELINE = 'hanging';
 
 var renderText = function (ctx, color, font, baseline, textName, x, y) {
-  ctx.fillStyle = color;
+  ctx.fillStyle = color || 'black';
   ctx.font = font;
   ctx.textBaseline = baseline;
   ctx.fillText(textName, x, y);
@@ -59,10 +59,7 @@ window.renderStatistics = function (ctx, names, times) {
     var SPACE_BETWEEN_TEXT_TABLE = 5;
     var RESULTS_BETWEEN_TABLE = 20;
     ctx.fillStyle = getColor(name);
-    // drawRect(ctx, INITIAL_X + (INDENT + BAR_WIDTH) * position, INITIAL_Y, BAR_WIDTH, -time * step); Старое
     drawRect(ctx, barX, INITIAL_Y, getColor(name), BAR_WIDTH, -time * step);
-    // ctx.fillRect(barX, INITIAL_Y, BAR_WIDTH, -time * step); Старое
-    // ctx.fillRect(INITIAL_Y, barX, time * step, BAR_WIDTH); По горизонтали
     ctx.fillText(name, barX, INITIAL_Y + SPACE_BETWEEN_TEXT_TABLE);
     ctx.fillText(time.toFixed(0), barX, INITIAL_Y - time * step - RESULTS_BETWEEN_TABLE);
   };
