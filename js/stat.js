@@ -21,9 +21,9 @@ var GAP = 10;
 var CLOUD_WIDTH = 420;
 var CLOUD_HEIGHT = 270;
 
-var renderCloud = function (ctx, x, y, color) {
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
+var drawRect = function (ctx, x, y, color, width, height) {
+  ctx.fillStyle = color || 'black';
+  ctx.fillRect(x, y, width, height);
 }; // Данные облаков
 
 // Данные текстов
@@ -44,8 +44,8 @@ var renderText = function (ctx, color, font, baseline, textName, x, y) {
 }; // Данные текстов
 
 window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)'); // Отображаем облако с тенью
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, 'white'); // Отображаем белое облако
+  drawRect(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)', CLOUD_WIDTH, CLOUD_HEIGHT); // Отображаем облако с тенью
+  drawRect(ctx, CLOUD_X, CLOUD_Y, 'white', CLOUD_WIDTH, CLOUD_HEIGHT); // Отображаем белое облако
   renderText(ctx, TEXT_COLOR, TEXT_FONT, TEXT_BASELINE, TEXT_WIN, TEXT_COORDINAT_X, TEXT_COORDINAT_Y); // Отображаем лозунг о победе
 
   var BAR_HEIGHT = 150;
@@ -55,16 +55,21 @@ window.renderStatistics = function (ctx, names, times) {
   var INITIAL_Y = 250;
 
   var drawResult = function (name, time, position, step) { // получаем результат одного чела
+    var barX = INITIAL_X + (INDENT + BAR_WIDTH) * position;
     var SPACE_BETWEEN_TEXT_TABLE = 5;
     var RESULTS_BETWEEN_TABLE = 20;
     ctx.fillStyle = getColor(name);
-    ctx.fillRect(INITIAL_X + (INDENT + BAR_WIDTH) * position, INITIAL_Y, BAR_WIDTH, -time * step);
-    ctx.fillText(name, INITIAL_X + (INDENT + BAR_WIDTH) * position, INITIAL_Y + SPACE_BETWEEN_TEXT_TABLE);
-    ctx.fillText(time.toFixed(0), INITIAL_X + (INDENT + BAR_WIDTH) * position, INITIAL_Y - time * step - RESULTS_BETWEEN_TABLE);
+    // drawRect(ctx, INITIAL_X + (INDENT + BAR_WIDTH) * position, INITIAL_Y, BAR_WIDTH, -time * step); Старое
+    drawRect(ctx, barX, INITIAL_Y, getColor(name), BAR_WIDTH, -time * step);
+    // ctx.fillRect(barX, INITIAL_Y, BAR_WIDTH, -time * step); Старое
+    // ctx.fillRect(INITIAL_Y, barX, time * step, BAR_WIDTH); По горизонтали
+    ctx.fillText(name, barX, INITIAL_Y + SPACE_BETWEEN_TEXT_TABLE);
+    ctx.fillText(time.toFixed(0), barX, INITIAL_Y - time * step - RESULTS_BETWEEN_TABLE);
   };
 
   var maxTime = getMaxElement(times);
   var step = BAR_HEIGHT / maxTime;
+
   renderText(ctx, TEXT_COLOR, TEXT_FONT, TEXT_BASELINE, TEXT_RESULTS, TEXT_COORDINAT_X, TEXT_COORDINAT_Y + TEXT_GAP); // Отображаем текст результатов
   for (var i = 0; i < times.length; i++) {
     drawResult(names[i], times[i], i, step);
