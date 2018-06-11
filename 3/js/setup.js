@@ -10,13 +10,13 @@ var WIZARD_EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 var WIZARD_HEAD_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_HANDS_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 
-var getRandomIndex = function (min, max) {
+var getRandomIndex = function (min, max) { // функция генерации случайных данных
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-var wizards = [];
+var wizards = []; // масиив для вставки магов
 
-for (var j = 0; j < 4; j++) {
+for (var j = 0; j < 4; j++) { // цикл для генерации магов и вставки в массив магов
   wizards.push({
     name: WIZARD_NAMES[getRandomIndex(0, WIZARD_NAMES.length - 1)] + ' ' + WIZARD_SUR_NAME[getRandomIndex(0, WIZARD_SUR_NAME.length - 1)],
     coatColor: WIZARD_COAT_COLOR[getRandomIndex(0, WIZARD_COAT_COLOR.length - 1)],
@@ -28,7 +28,7 @@ for (var j = 0; j < 4; j++) {
 
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-var renderWizard = function (wizard) {
+var renderWizard = function (wizard) { // функция по созданию ДОМ мага
   var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
   wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
@@ -38,13 +38,17 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-var fragment = document.createDocumentFragment();
+var fragment = document.createDocumentFragment(); // создаем контейнер для хранения ДОМ мага
 
-for (var i = 0; i < wizards.length; i++) {
-  fragment.appendChild(renderWizard(wizards[i]));
-}
+var appendWizardsInFragment = function () { // функция для генерации 4-х ДОМ магов и вставки в контейнер
+  for (var i = 0; i < wizards.length; i++) {
+    fragment.appendChild(renderWizard(wizards[i]));
+  }
+};
+
+appendWizardsInFragment(); // запуск фунции
 
 var similarListElement = userDialog.querySelector('.setup-similar-list');
 
-similarListElement.appendChild(fragment);
+similarListElement.appendChild(fragment); // вставляем из контейнера в разметку 4-х ДОМ магов
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
