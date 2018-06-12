@@ -15,16 +15,21 @@ var getRandomIndex = function (min, max) { // функция генерации 
 };
 
 var wizards = []; // масиив для вставки магов
+var COUNT_WIZARDS = 4;
 
-for (var j = 0; j < 4; j++) { // цикл для генерации магов и вставки в массив магов
-  wizards.push({
-    name: WIZARD_NAMES[getRandomIndex(0, WIZARD_NAMES.length - 1)] + ' ' + WIZARD_SUR_NAME[getRandomIndex(0, WIZARD_SUR_NAME.length - 1)],
-    coatColor: WIZARD_COAT_COLOR[getRandomIndex(0, WIZARD_COAT_COLOR.length - 1)],
-    eyesColor: WIZARD_EYES_COLOR[getRandomIndex(0, WIZARD_EYES_COLOR.length - 1)],
-    headColor: WIZARD_HEAD_COLOR[getRandomIndex(0, WIZARD_HEAD_COLOR.length - 1)],
-    handsColor: WIZARD_HANDS_COLOR[getRandomIndex(0, WIZARD_HANDS_COLOR.length - 1)]
-  });
-}
+var appendWizard = function () {
+  for (var j = 0; j < COUNT_WIZARDS; j++) { // цикл для генерации магов и вставки в массив магов
+    wizards.push({
+      name: WIZARD_NAMES[getRandomIndex(0, WIZARD_NAMES.length - 1)] + ' ' + WIZARD_SUR_NAME[getRandomIndex(0, WIZARD_SUR_NAME.length - 1)],
+      coatColor: WIZARD_COAT_COLOR[getRandomIndex(0, WIZARD_COAT_COLOR.length - 1)],
+      eyesColor: WIZARD_EYES_COLOR[getRandomIndex(0, WIZARD_EYES_COLOR.length - 1)],
+      headColor: WIZARD_HEAD_COLOR[getRandomIndex(0, WIZARD_HEAD_COLOR.length - 1)],
+      handsColor: WIZARD_HANDS_COLOR[getRandomIndex(0, WIZARD_HANDS_COLOR.length - 1)]
+    });
+  }
+};
+
+appendWizard();
 
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
@@ -44,11 +49,11 @@ var appendWizardsInFragment = function () { // функция для генер�
   for (var i = 0; i < wizards.length; i++) {
     fragment.appendChild(renderWizard(wizards[i]));
   }
+  var similarListElement = userDialog.querySelector('.setup-similar-list');
+
+  similarListElement.appendChild(fragment); // вставляем из контейнера в разметку 4-х ДОМ магов
 };
 
 appendWizardsInFragment(); // запуск фунции
 
-var similarListElement = userDialog.querySelector('.setup-similar-list');
-
-similarListElement.appendChild(fragment); // вставляем из контейнера в разметку 4-х ДОМ магов
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
