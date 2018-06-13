@@ -130,7 +130,8 @@ var COLOR_WIZARD_COAT = [
 ];
 
 var wizardCoat = setupDialog.querySelector('.setup-wizard .wizard-coat');
-var wizardCoatColor = document.forms[0]['coat-color'];
+var wizardCoatColor = setupDialog.querySelector('input[name="coat-color"]');
+// var wizardCoatColor = document.forms[0]['coat-color'];
 
 wizardCoat.addEventListener('click', function () { // событие по изменению цвета мантии мага при нажатии
   var colorCoat = COLOR_WIZARD_COAT[getRandomIndex(0, COLOR_WIZARD_COAT.length - 1)];
