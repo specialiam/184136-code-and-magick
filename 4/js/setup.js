@@ -60,7 +60,7 @@ var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
 var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (evt.keyCode === ESC_KEYCODE && !evt.target.classList.contains('setup-user-name')) {
     closePopup();
   }
 };
@@ -130,12 +130,10 @@ var COLOR_WIZARD_COAT = [
 ];
 
 var wizardCoat = setupDialog.querySelector('.setup-wizard .wizard-coat');
-var wizardCoatColor = document.forms[0]['coat-color'];
 
 wizardCoat.addEventListener('click', function () { // событие по изменению цвета мантии мага при нажатии
   var colorCoat = COLOR_WIZARD_COAT[getRandomIndex(0, COLOR_WIZARD_COAT.length - 1)];
   wizardCoat.style.fill = colorCoat;
-  wizardCoatColor.value = colorCoat;
 });
 
 var COLOR_WIZARD_EYES = [
@@ -147,12 +145,10 @@ var COLOR_WIZARD_EYES = [
 ];
 
 var wizardEyes = setupDialog.querySelector('.setup-wizard .wizard-eyes');
-var wizardEyesColor = document.forms[0]['eyes-color'];
 
 wizardEyes.addEventListener('click', function () { // событие по изменению цвета глаз мага при нажатии
   var colorEyes = COLOR_WIZARD_EYES[getRandomIndex(0, COLOR_WIZARD_EYES.length - 1)];
   wizardEyes.style.fill = colorEyes;
-  wizardEyesColor.value = colorEyes;
 });
 
 var COLOR_WIZARD_FIREBALL = [
@@ -164,10 +160,8 @@ var COLOR_WIZARD_FIREBALL = [
 ];
 
 var wizardFireball = setupDialog.querySelector('.setup-fireball-wrap');
-var wizardFireballColor = document.forms[0]['fireball-color'];
 
 wizardFireball.addEventListener('click', function () { // событие по изменению цвета фаербола при нажатии
   var colorFireball = COLOR_WIZARD_FIREBALL[getRandomIndex(0, COLOR_WIZARD_FIREBALL.length - 1)];
   wizardFireball.style.background = colorFireball;
-  wizardFireballColor.value = colorFireball;
 });
